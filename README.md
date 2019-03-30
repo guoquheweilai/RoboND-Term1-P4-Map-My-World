@@ -1,11 +1,13 @@
-# RoboND-Term1-P3-Where-Am-I
-Project 3 of Udacity Robotics Software Engineer Nanodegree Program
+# RoboND-Term1-P4-Map-My-World
+Project 4 of Udacity Robotics Software Engineer Nanodegree Program
 ![Overview](/videos/Term1-Project3-Where-Am-I-Demo_2.gif)  
+[TODO]  
 ## Overview  
 In this project you'll utilize ROS AMCL package to accurately localize a mobile robot inside a map in the Gazebo simulation environments. Here are the steps to learn several aspects of robotic software engineering with a focus on ROS:  
 * Create a ROS package that launches a custom robot model in a custom Gazebo world  
 * Utilize the ROS AMCL package and the Tele-Operation / Navigation Stack to localize the robot  
 * Explore, add, and tune specific parameters corresponding to each package to achieve the best possible localization results  
+[TODO]  
 ## Prerequisites/Dependencies  
 * Gazebo >= 7.0  
 * ROS Kinetic  
@@ -33,6 +35,7 @@ sudo apt-get install ros-kinetic-amcl
   * Linux: gcc / g++ is installed by default on most Linux distros
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
+[TODO]  
 ## Setup Instructions (abbreviated)  
 1. Meet the `Prerequisites/Dependencies`  
 2. Open Ubuntu Bash and clone the project repository  
@@ -41,6 +44,7 @@ sudo apt-get install ros-kinetic-amcl
 sudo apt-get update && sudo apt-get upgrade -y
 ```
 4. Build and run your code.  
+[TODO]  
 ## Project Description  
 Directory Structure  
 ```
@@ -150,7 +154,7 @@ Directory Structure
 - [myoffice.yaml](/catkin_ws/src/my_robot/maps/myoffice.yaml): Info for myoffice map
 - [default.rviz](/catkin_ws/src/my_robot/rviz/default.rviz): Default rviz
 - [map.pgm](/catkin_ws/src/pgm_map_creator/maps/map.pgm): Generated myoffice map
-
+[TODO]  
 ## Run the project  
 * Clone this repository
 ```
@@ -185,7 +189,7 @@ Open another terminal and launch the `teleop` script:
 rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 You could control your robot by keyboard commands now.  
-
+[TODO]  
 ## Tips  
 1. It's recommended to update and upgrade your environment before running the code.  
 ```bash
@@ -217,17 +221,17 @@ Yes, he did.
 ### 2. Simulation Setup
 #### 2.1 Did the student set up the simulation environment properly?  
 Yes, he did.  
-#### 2.2 Is the student's simulation setup suitable for the localization task?  
+#### 2.2 Is the student's simulation suitable for mapping task?  
 Yes, it is.  
-### 3. Localization Setup  
-#### 3.1 Did the student correctly build the launch files for localization?  
-Yes, he did.  
-#### 3.2 Did the student properly set the parameters for localization?  
-Yes, he did.  
-### 4. Localization Performance  
-#### 4.1 Is the student's robot able to localize itself?  
-Yes, it is.  
-
+### 3. Mapping Package  
+#### 3.1 Does the student correctly build all required launch files for RTAB-Mapping?  
+Yes, he does.  
+### 4. Mapping Accuracy  
+#### 4.1 Was the student able to generate a 3D map using RTAB-Map?  
+Yes, he was.  
+#### 4.2 Does the student's 3D map portray environment characteristics?  
+Yes, he does.  
+[TODO]  
 ## Videos  
 Too few particles will result into localization failure.  
 ![Demo_1](/videos/Term1-Project3-Where-Am-I-Demo_1.gif)  

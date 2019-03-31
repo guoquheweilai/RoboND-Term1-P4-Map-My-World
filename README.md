@@ -7,7 +7,7 @@ In this project you'll utilize ROS AMCL package to accurately localize a mobile 
 * Create a ROS package that launches a custom robot model in a custom Gazebo world  
 * Utilize the ROS AMCL package and the Tele-Operation / Navigation Stack to localize the robot  
 * Explore, add, and tune specific parameters corresponding to each package to achieve the best possible localization results  
-[TODO]  
+
 ## Prerequisites/Dependencies  
 * Gazebo >= 7.0  
 * ROS Kinetic  
@@ -27,6 +27,10 @@ sudo apt-get install ros-kinetic-move-base
 ```
 sudo apt-get install ros-kinetic-amcl
 ```
+* ROS rtabmap-ros package
+```
+sudo apt-get install ros-kinetic-rtabmap-ros
+```
 * make >= 4.1(mac, linux), 3.81(Windows)
   * Linux: make is installed by default on most Linux distros
   * Mac: [install Xcode command line tools to get make](https://developer.apple.com/xcode/features/)
@@ -35,7 +39,7 @@ sudo apt-get install ros-kinetic-amcl
   * Linux: gcc / g++ is installed by default on most Linux distros
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
-[TODO]  
+
 ## Setup Instructions (abbreviated)  
 1. Meet the `Prerequisites/Dependencies`  
 2. Open Ubuntu Bash and clone the project repository  
@@ -158,58 +162,46 @@ Directory Structure
 ## Run the project  
 * Clone this repository
 ```
-git clone https://github.com/jinchaolu/RoboND-Term1-P3-Where-Am-I.git
+https://github.com/jinchaolu/RoboND-Term1-P4-Map-My-World.git
 ```
 * Open the repository and make  
 ```
-cd /home/workspace/RoboND-Term1-P3-Where-Am-I/catkin_ws/
+cd /home/workspace/RoboND-Term1-P4-Map-My-World/catkin_ws/
 catkin_make
 ```
 * Launch my_robot in Gazebo to load both the world and plugins  
 ```
 roslaunch my_robot world.launch
 ```  
-* Launch amcl node  
+* Launch teleop_twist_keyboard node, open a new terminal, enter  
 ```
-roslaunch my_robot amcl.launch
+cd /home/workspace/RoboND-Term1-P4-Map-My-World/catkin_ws/
+source devel/setup.bash
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+```  
+* Launch teleop_twist_keyboard node, open a new terminal, enter  
+```
+cd /home/workspace/RoboND-Term1-P4-Map-My-World/catkin_ws/
+source devel/setup.bash
+roslaunch my_robot mapping.launch
 ```  
 * Testing  
-You have two options to control your robot while it localize itself here:  
-  * Send navigation goal via RViz  
-  * Send move command via teleop package.  
-Navigate your robot, observe its performance and tune your parameters for AMCL.  
+Send move command via teleop package to control your robot and observe real-time visualization in the environment `rtabmapviz`.  
+rtabmap-databaseViewer ~/.ros/rtabmap.db
 
-**Option 1: Send `2D Navigation Goal`**  
-Your first option would be sending a `2D Nav Goal` from RViz. The `move_base` will try to navigate your robot based on the localization. Based on the new observation and the odometry, the robot to further perform the localization.  
-Click the `2D Nav Goal` button in the toolbar, then click and drag on the map to send the goal to the robot. It will start moving and localize itself in the process. If you would like to give `amcl` node a nudge, you could give the robot an initial position estimate on the map using `2D Pose Estimate`.  
-**Option 2: Use `teleop` Node**  
-You could also use teleop node to control your robot and observe it localize itself in the environment.  
-Open another terminal and launch the `teleop` script:  
+* View database
+Once you statisfied with your move, press `Ctrl + c` to exit then view your database with
 ```
-rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+rtabmap-databaseViewer ~/.ros/rtabmap.db
 ```
-You could control your robot by keyboard commands now.  
-[TODO]  
+Remember to rename your `~/.ros/rtabmap.db` before your next attempt since it will be deleted due to the launch file setting in `mapping.launch`
+
 ## Tips  
 1. It's recommended to update and upgrade your environment before running the code.  
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y
 ```
-2. You might need to generate the map again because of the size.  
-Please refer to [Map_Setup.md](/Map_Setup.md) to generate your map step-by-step.  
-3. When you see this error:  
-[request_publisher-2] process has died [pid 7531, exit code -6, cmd /home/nvidia/Documents/github/RoboND-Term1-P3-Where-Am-I/catkin_ws/devel/lib/pgm_map_creator/request_publisher (-30,30)(30,30)(30,-30)(-30,-30) 5 0.01 /home/nvidia/Documents/github/RoboND-Term1-P3-Where-Am-I/catkin_ws/src/pgm_map_creator/maps/map __name:=request_publisher __log:=/home/nvidia/.ros/log/21ee11ca-411f-11e9-9258-00044bc5f185/request_publisher-2.log].
-log file: /home/nvidia/.ros/log/21ee11ca-411f-11e9-9258-00044bc5f185/request_publisher-2*.log
-
-Please refer to this link to fix it,  
-http://answers.gazebosim.org/question/8928/protobuf-error-for-custom-messages-transport-tutorial/  
-
-Then `catkin_make`  
-Then `source`  
-4. Got an error when launching amcl.launch  
-check the amcl.launch file that you have correctly mapped the topics to the correct published ones  
-<remap to="scan" from="my_robot/laser/scan"/>  
-Figure out amcl node is subscribing which topic? Then do the correct remapping.  
+2. Remember to rename your `~/.ros/rtabmap.db` before your next attempt since it will be deleted due to the launch file setting in `mapping.launch`
 
 ## Code Style  
 Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).

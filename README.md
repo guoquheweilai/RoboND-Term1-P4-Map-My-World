@@ -1,12 +1,15 @@
 # RoboND-Term1-P4-Map-My-World
 Project 4 of Udacity Robotics Software Engineer Nanodegree Program
-![Overview](/videos/Term1-Project3-Where-Am-I-Demo_2.gif)  
-[TODO]  
+![Overview](/screenshots/Overview.png)  
+
 ## Overview  
-In this project you'll utilize ROS AMCL package to accurately localize a mobile robot inside a map in the Gazebo simulation environments. Here are the steps to learn several aspects of robotic software engineering with a focus on ROS:  
-* Create a ROS package that launches a custom robot model in a custom Gazebo world  
-* Utilize the ROS AMCL package and the Tele-Operation / Navigation Stack to localize the robot  
-* Explore, add, and tune specific parameters corresponding to each package to achieve the best possible localization results  
+In this project you will create a 2D occupancy grid and 3D octomap from a simulated environment using your own robot with the RTAB-Map package.  
+RTAB-Map (Real-Time Appearance-Based Mapping) is a popular solution for SLAM to develop robots that can map environments in 3D. RTAB-Map has good speed and memory management, and it provides custom developed tools for information analysis. Most importantly, the quality of the documentation on ROS Wiki (http://wiki.ros.org/rtabmap_ros) is very high. Being able to leverage RTAB-Map with your own robots will lead to a solid foundation for mapping and localization well beyond this Nanodegree program.  
+For this project we will be using the `rtabmap_ros` package, which is a ROS wrapper (API) for interacting with RTAB-Map. Keep this in mind when looking at the relative documentation.  
+* You will develop your own package to interface with the rtabmap_ros package.  
+* You will build upon your localization project to make the necessary changes to interface the robot with RTAB-Map. An example of this is the addition of an RGB-D camera.  
+* You will ensure that all files are in the appropriate places, all links are properly connected, naming is properly setup and topics are correctly mapped. Furthermore you will need to generate the appropriate launch files to launch the robot and map its surrounding environment.  
+* When your robot is launched you will teleop around the room to generate a proper map of the environment.  
 
 ## Prerequisites/Dependencies  
 * Gazebo >= 7.0  
@@ -48,12 +51,13 @@ sudo apt-get install ros-kinetic-rtabmap-ros
 sudo apt-get update && sudo apt-get upgrade -y
 ```
 4. Build and run your code.  
-[TODO]  
+
 ## Project Description  
 Directory Structure  
 ```
-.Where-Am-I                                    # Where Am I Project
+.Map-My-World                                  # Map My World Project
 ├── catkin_ws                                  # Catkin workspace
+│   ├── frames.pdf                             # view_frames result
 │   ├── src
 │   │   ├── ball_chaser                        # ball_chaser package        
 │   │   │   ├── launch                         # launch folder for launch files
@@ -87,6 +91,8 @@ Directory Structure
 │   │   │   │   ├── amcl.launch
 │   │   │   │   ├── robot_description.launch
 │   │   │   │   ├── world.launch
+│   │   │   │   ├── mapping.launch
+│   │   │   │   ├── localization.launch
 │   │   │   ├── maps                           # maps folder for maps
 │   │   │   │   ├── myoffice.pgm
 │   │   │   │   ├── myoffice.yaml
@@ -130,16 +136,10 @@ Directory Structure
 ├── my_ball                                    # Model files 
 │   ├── model.config
 │   ├── model.sdf
-├── videos                                     # Video files
-│   ├── Term1-Project3-Where-Am-I-Demo_1.gif   # Demo video
-│   ├── Term1-Project3-Where-Am-I-Demo_2.gif   # Demo video
-│   ├── Term1-Project3-Where-Am-I-Demo_3.gif   # Demo video
-│   ├── Term1-Project3-Where-Am-I-Demo_4.gif   # Demo video
+├── screenshots                                # Screenshots
+│   ├── Overview.png                           # Screenshot for overview
 ```
-- [Term1-Project3-Where-Am-I-Demo_1.gif](/videos/Term1-Project3-Where-Am-I-Demo_1.gif): A demo video for failure run.  
-- [Term1-Project3-Where-Am-I-Demo_2.gif](/videos/Term1-Project3-Where-Am-I-Demo_2.gif): A demo video for successful run.  
-- [Term1-Project3-Where-Am-I-Demo_3.gif](/videos/Term1-Project3-Where-Am-I-Demo_3.gif): A demo video for successful run.  
-- [Term1-Project3-Where-Am-I-Demo_4.gif](/videos/Term1-Project3-Where-Am-I-Demo_4.gif): A demo video for successful run.  
+- [Overview.png](/screenshots/Overview.png): An overview screenshot to demo the final result
 - [drive_bot.cpp](/catkin_ws/src/ball_chaser/src/drive_bot.cpp): ROS service C++ script, command the robot with specify speeds.  
 - [process_images.cpp](/catkin_ws/src/ball_chaser/src/process_images.cpp): ROS service C++ script, process the camera image and return requested speeds.  
 - [gokart_description.launch](/catkin_ws/src/my_gokart/launch/gokart_description.launch): Create gokart model in Gazebo world.  
@@ -158,7 +158,9 @@ Directory Structure
 - [myoffice.yaml](/catkin_ws/src/my_robot/maps/myoffice.yaml): Info for myoffice map
 - [default.rviz](/catkin_ws/src/my_robot/rviz/default.rviz): Default rviz
 - [map.pgm](/catkin_ws/src/pgm_map_creator/maps/map.pgm): Generated myoffice map
-[TODO]  
+- [localization.launch](/catkin_ws/src/my_robot/launch/localization.launch): Launch localization node
+- [mapping.launch](/catkin_ws/src/my_robot/launch/mapping.launch): Launch mapping node
+
 ## Run the project  
 * Clone this repository
 ```
@@ -223,15 +225,3 @@ Yes, he does.
 Yes, he was.  
 #### 4.2 Does the student's 3D map portray environment characteristics?  
 Yes, he does.  
-[TODO]  
-## Videos  
-Too few particles will result into localization failure.  
-![Demo_1](/videos/Term1-Project3-Where-Am-I-Demo_1.gif)  
-Good run demo 1.  
-![Demo_2](/videos/Term1-Project3-Where-Am-I-Demo_2.gif)  
-Good run demo 2.  
-![Demo_3](/videos/Term1-Project3-Where-Am-I-Demo_3.gif)  
-Good run demo 3.  
-![Demo_4](/videos/Term1-Project3-Where-Am-I-Demo_4.gif)  
-Good run demo 4.  
-![Demo_4](/videos/Term1-Project3-Where-Am-I-Demo_5.gif)  
